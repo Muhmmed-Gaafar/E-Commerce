@@ -92,7 +92,8 @@ class ProductService
     public function updateProduct($id, Request $request): Product
     {
         $data = $request->validated();
-        $product = Product::where('id', $id)->first();
+        $product = Product::findOrFail($id);
+
         if (isset($data['image']) && $data['image'] instanceof \Illuminate\Http\UploadedFile) {
             if ($product->image) {
                 Storage::delete(str_replace('/storage', 'public', $product->image));
@@ -101,50 +102,59 @@ class ProductService
         }
 
         if (isset($data['colors'])) {
+            $product->colors()->delete();
             foreach ($data['colors'] as $color) {
                 ProductColor::create([
                     'color' => $color,
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
                 ]);
             }
         }
+
         if (isset($data['sizes'])) {
+            $product->sizes()->delete();
             foreach ($data['sizes'] as $size) {
                 ProductSize::create([
                     'size' => $size,
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
                 ]);
             }
         }
+
         if (isset($data['types'])) {
+            $product->types()->delete();
             foreach ($data['types'] as $type) {
                 ProductType::create([
                     'type' => $type,
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
                 ]);
             }
         }
-        if (isset($data['images'])) {
-            foreach ($data['images'] as $image) {
 
+        if (isset($data['images'])) {
+            $product->images()->delete();
+            foreach ($data['images'] as $image) {
                 ProductImage::create([
                     'image' => $image,
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
                 ]);
-
             }
         }
+
         if (isset($data['reviews'])) {
+            $product->reviews()->delete();
             foreach ($data['reviews'] as $review) {
                 ProductReview::create([
                     'name' => $review['name'],
                     'rate' => $review['rate'],
                     'comment' => $review['comment'],
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
                 ]);
             }
         }
+
         $product->update($data);
+
         return $product;
     }
     public function deleteProduct($id)
