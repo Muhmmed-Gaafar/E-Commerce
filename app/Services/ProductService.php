@@ -27,6 +27,7 @@ class ProductService
 
     public function createProduct( $request)
     {
+
         $data = $request->validated();
         if (isset($data['price']) && isset($data['tax'])) {
             $data['price_after_tax'] = $data['price'] + $data['tax'];

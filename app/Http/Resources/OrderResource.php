@@ -15,20 +15,23 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
+
+
         if (Auth::check()) {
             $user = Auth::user();
             return [
-                'id' => $this->id,
-                'user_id' => $user->id,
-                'first_name' => $user->first_name,
-                'last_name' => $user->last_name,
-                'phone' => $user->phone,
-                'address' => $user->address,
-                'email' => $user->email,
-                'city' => $user->city,
-                'total' => intval($this->total),
-                'status' => $this->status,
-                'note' => $this->note,
+                'id' => $this->id?? "",
+                'user_id' => $user->id?? "",
+                'first_name' => $user->first_name?? "",
+                'last_name' => $user->last_name?? "",
+                'phone' => $user->phone?? "",
+                'address' => $user->address?? "",
+                'email' => $user->email?? "",
+                'city' => $user->city?? "",
+                'total' => intval($this->total)?? "",
+                'status' => $this->status?? "",
+                'note' => $this->note?? "",
+
             ];
         } else {
             return [

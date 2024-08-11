@@ -39,7 +39,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = $this->productService->createProduct($request);
-        return $this->success(new ProductResource($product), 'Product created successfully', 201);
+        return $this->success(new ProductShowResource($product), 'Product created successfully', 201);
     }
 
     public function show($id)
