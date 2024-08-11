@@ -17,6 +17,10 @@ class AdminController extends Controller
         $this->adminService = $adminService;
     }
 
+
+
+
+
     public function index()
     {
         $admins = $this->adminService->getAllAdmins();
