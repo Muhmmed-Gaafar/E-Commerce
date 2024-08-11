@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Models\OrderItem;
+use App\Models\Product;
 
 class OrderItemService
 {
@@ -19,6 +20,13 @@ class OrderItemService
 
     public function createOrderItem($data)
     {
+        $product = Product::find($data['product_id']);
+        $priceAfterTax = $product->price + $product->tax;
+        $totalPrice = $data['quantity'] * $priceAfterTax;
+        if (!isset($data['price'])) {
+            $data['price'] = $totalPrice;
+        }
+
         return OrderItem::create($data);
     }
 

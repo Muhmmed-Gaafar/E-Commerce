@@ -17,7 +17,7 @@ class OrderItemRequest extends FormRequest
             'order_id' => 'required|exists:orders,id',
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric',
+            'price' => 'nullable|numeric|min:0',
         ];
     }
 }

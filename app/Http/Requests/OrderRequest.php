@@ -22,7 +22,6 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'nullable|exists:users,id',
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
@@ -30,8 +29,12 @@ class OrderRequest extends FormRequest
             'email' => 'nullable|email|max:255',
             'city' => 'nullable|string|max:255',
             'total' => 'nullable|numeric',
-            'status' => 'nullable|in:processing,indelivery,completed,refused',
+            'status' => 'nullable|string|in:processing,indelivery,completed,refused',
             'note' => 'nullable|string',
+            'order_items' => 'required|array',
+            'order_items.*.product_id' => 'required|exists:products,id',
+            'order_items.*.quantity' => 'required|integer|min:1',
+            'order_items.*.price' => 'nullable|numeric',
         ];
     }
 }
