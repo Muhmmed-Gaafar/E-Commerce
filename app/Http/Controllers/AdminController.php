@@ -27,6 +27,11 @@ class AdminController extends Controller
         return AdminResource::collection($admins);
     }
 
+
+
+
+
+
     public function show($id)
     {
         $admin = $this->adminService->getAdminById($id);
