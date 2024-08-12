@@ -19,7 +19,7 @@ class OrderItemResource extends JsonResource
 //            'product_price'=> $this->product->price,
 //            'product_tax'=> $this->product->tax ,
             'quantity' => intval($this->quantity),
-            'price' => $this->price,
+            'total' => intval($this->price),
         ];
     }
 }

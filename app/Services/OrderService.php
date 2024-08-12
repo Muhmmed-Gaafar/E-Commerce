@@ -45,8 +45,7 @@ class OrderService
             $orderItemsData = [];
             foreach ($data['order_items'] as $itemData) {
                 $product = Product::findOrFail($itemData['product_id']);
-
-                $itemTotal = $itemData['price'] ;
+                $itemTotal = $itemData['price'] ?? ($product->price + $product->tax) * $itemData['quantity'];
                 $totalPrice += $itemTotal;
                 $orderItemsData[] = [
                     'product_id' => $itemData['product_id'],
