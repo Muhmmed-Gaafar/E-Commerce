@@ -56,10 +56,7 @@ class OrderService
                 $priceAfterTax = $product->price + $product->tax;
                 $Total = $itemData['quantity'] * $priceAfterTax;
                 $totalPrice += $Total;
-
                 $itemData['price'] = $Total;
-                $itemData['order_id'] = $order->id;
-
                 $orderItemsData[] = $itemData;
             }
 
@@ -67,6 +64,7 @@ class OrderService
             $order = Order::create($data);
 
             foreach ($orderItemsData as $itemData) {
+                $itemData['order_id'] = $order->id;
                 OrderItem::create($itemData);
             }
             return $order;

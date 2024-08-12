@@ -26,12 +26,12 @@ class OrderItemController extends Controller
         return $this->success(OrderItemResource::collection($orderItems), 'Order items retrieved successfully', 200);
     }
 
-    public function store(OrderItemRequest $request)
-    {
-            $orderItem = $this->orderItemService->createOrderItem($request->validated());
-            return $this->success(new OrderItemResource($orderItem), 'Order item created successfully', 201);
-
-    }
+//    public function store(OrderItemRequest $request)
+//    {
+//            $orderItem = $this->orderItemService->createOrderItem($request->validated());
+//            return $this->success(new OrderItemResource($orderItem), 'Order item created successfully', 201);
+//
+//    }
 
     public function show($id)
     {
