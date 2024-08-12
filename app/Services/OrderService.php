@@ -21,13 +21,6 @@ class OrderService
         return Order::findOrFail($id);
     }
 
-//    public function createOrder($data)
-//    {
-//        $user = Auth::user();
-//        $data['user_id'] = $user->id;
-//        return Order::create($data);
-//    }
-
     public function createOrder(array $data)
     {
         return DB::transaction(function () use ($data) {
@@ -52,8 +45,8 @@ class OrderService
             $orderItemsData = [];
             foreach ($data['order_items'] as $itemData) {
                 $product = Product::findOrFail($itemData['product_id']);
-                $priceAfterTax = $product->price + $product->tax;
-                $itemTotal = $itemData['quantity'] * $priceAfterTax;
+
+                $itemTotal = $itemData['price'] ;
                 $totalPrice += $itemTotal;
                 $orderItemsData[] = [
                     'product_id' => $itemData['product_id'],

@@ -17,7 +17,6 @@ class OrderResource extends JsonResource
     {
 
 
-        if (Auth::check()) {
             $user = Auth::user();
             return [
                 'id' => $this->id?? "",
@@ -31,22 +30,8 @@ class OrderResource extends JsonResource
                 'total' => intval($this->total)?? "",
                 'status' => $this->status?? "",
                 'note' => $this->note?? "",
+                'order_items' => OrderItemResource::collection($this->orderItems),
+            ];
 
-            ];
-        } else {
-            return [
-                'id' => $this->id ?? "",
-                'user_id' => $this->user_id ?? "",
-                'first_name' => $this->first_name ?? "",
-                'last_name' => $this->last_name ?? "",
-                'phone' => $this->phone ?? "",
-                'address' => $this->address ?? "",
-                'email' => $this->email ?? "",
-                'city' => $this->city ?? "",
-                'total' => intval($this->total),
-                'status' => $this->status ?? "",
-                'note' => $this->note ?? "",
-            ];
-        }
     }
 }
