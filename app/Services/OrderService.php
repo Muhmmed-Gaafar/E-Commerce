@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -54,6 +55,7 @@ class OrderService
                 ];
             }
             $data['total'] = $totalPrice;
+            $data['status'] = OrderStatus::PROCESSING->value;
             $order = Order::create($data);
 
             foreach ($orderItemsData as &$itemData) {
