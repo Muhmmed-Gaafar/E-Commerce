@@ -20,4 +20,12 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * Get the order that owns the order item.
+     */
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

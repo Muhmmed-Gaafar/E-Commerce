@@ -28,7 +28,7 @@ class OrderService
 //        return Order::create($data);
 //    }
 
-    public function createOrder($data)
+    public function createOrder(array $data)
     {
         return DB::transaction(function () use ($data) {
             $user = Auth::user();
@@ -49,27 +49,30 @@ class OrderService
             }
 
             $totalPrice = 0;
-            $order = Order::create($data);
-
+            $orderItemsData = [];
             foreach ($data['order_items'] as $itemData) {
                 $product = Product::findOrFail($itemData['product_id']);
                 $priceAfterTax = $product->price + $product->tax;
-                $Total = $itemData['quantity'] * $priceAfterTax;
-                $totalPrice += $Total;
-                $itemData['price'] = $Total;
-                $orderItemsData[] = $itemData;
+                $itemTotal = $itemData['quantity'] * $priceAfterTax;
+                $totalPrice += $itemTotal;
+                $orderItemsData[] = [
+                    'product_id' => $itemData['product_id'],
+                    'quantity' => $itemData['quantity'],
+                    'price' => $itemTotal,
+                ];
             }
-
             $data['total'] = $totalPrice;
             $order = Order::create($data);
 
-            foreach ($orderItemsData as $itemData) {
+            foreach ($orderItemsData as &$itemData) {
                 $itemData['order_id'] = $order->id;
                 OrderItem::create($itemData);
             }
+
             return $order;
         });
     }
+
 
     public function updateOrder($id, $data)
     {
