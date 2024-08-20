@@ -32,7 +32,8 @@ use App\Http\Controllers\OrderController;
 //
 
 
-
+Route::middleware(['auth', 'admin'])->group(function () {
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -72,7 +73,6 @@ Route::prefix('products')->group(function () {
     Route::post('getProductsByCategory', [ProductController::class, 'getProductsByCategory']);
     Route::post('change_favorite_product', [ProductController::class, 'change_favorite_product'])->name('products.change_favorite_product');
     Route::get('/products/addFavoriteProduct', [ProductController::class, 'addFavoriteProduct']);
-
 });
 
 // Routes for Product _Type

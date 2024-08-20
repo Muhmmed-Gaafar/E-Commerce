@@ -20,7 +20,6 @@ trait Response
             'status' => $status,
             'msg' => $msg,
             'data' => $data,
-
         ], $status);
     }
 
@@ -38,7 +37,6 @@ trait Response
             'status' => $status,
             'msg' => $msg,
             'data' => $data,
-
         ], $status);
     }
 
@@ -54,7 +52,6 @@ trait Response
         return response()->json([
             'status' => $status,
             'msg' => $msg,
-
         ], $status);
     }
 }
