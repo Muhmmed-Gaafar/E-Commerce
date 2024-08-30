@@ -12,7 +12,6 @@ class AdminService
     {
         return Admin::all();
     }
-
     public function getAdminById($id)
     {
         return Admin::where('id', $id)->first();
@@ -24,8 +23,6 @@ class AdminService
          $data['image'] = upload_image('public/AdminsImages' ,$data['image']);
         return Admin::create($data);
     }
-
-
     public function updateAdmin($id,  $data)
     {
         $admin = Admin::where('id', $id)->first();
